@@ -70,8 +70,9 @@ Bütün endpoint-lər `?lang=az|ru|en` qəbul edir (default `az`).
 Tələb: Node.js 20+, Docker (və ya quraşdırılmış PostgreSQL).
 
 ```bash
-# 1. Verilənlər bazası
+# 1. Verilənlər bazası (Docker Desktop açıq olmalıdır)
 docker compose up -d
+docker ps              # siyahıda "evim-db" görünməlidir
 
 # 2. Backend  → http://localhost:4000
 cd backend
@@ -86,6 +87,9 @@ cp .env.example .env.local
 npm install
 npm run dev
 ```
+
+> Docker bazası kompüterdə **5433** portunda açılır ki, başqa PostgreSQL ilə (5432) toqquşmasın.
+> `password authentication failed` xətası görsəniz, `backend/.env`-də portun `5433` olduğunu yoxlayın.
 
 Faydalı əmrlər (backend):
 
