@@ -1,0 +1,28 @@
+# Render Blueprint — free backend hosting
+# Render dashboard → New → Blueprint → select this repository.
+# The database lives on Neon (free, does not expire); paste its URL as DATABASE_URL.
+services:
+  - type: web
+    name: evim-api
+    runtime: node
+    plan: free
+    region: frankfurt
+    rootDir: backend
+    buildCommand: npm ci --omit=dev
+    # Applies migrations, seeds the 10 default homes if the DB is empty, then starts the API
+    startCommand: npm run start:prod
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATABASE_URL
+        sync: false # set in the dashboard (Neon connection string)
+      - key: DATABASE_SSL
+        value: "true"
+      - key: CORS_ORIGIN
+        sync: false # e.g. https://evim.vercel.app
+      - key: CORS_ALLOW_VERCEL_PREVIEWS
+        value: "true"
